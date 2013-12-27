@@ -4,7 +4,7 @@ import os
 audio_dir = 'audio'
 os_data = os.uname()
 
-if os_data[1] == 'rasberrypi':
+if os_data[1] == 'raspberrypi':
     player = 'omxplayer'
 elif os_data[0] == 'Darwin':
     player ='afplay'
