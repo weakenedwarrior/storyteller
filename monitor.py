@@ -1,48 +1,73 @@
 
 class Monitor(object):
 
+    def __init__(self):
+        self.currentSensor = None
+        self.clearBuckets()
+
     def setSerial(self, SerialClass):
         self.ser = SerialClass()
         
     def setThreshold(self, threshold):
         self.threshold = threshold
         
-    def getPosList(self):
+    def getDistances(self):
         self.readline()
-        return self.poslist 
+        return self.distances 
     
     def getClosedSensors(self):
         self.readline()
-        return [i for i in range(len(self.poslist)) if 0 < self.poslist[i] <= self.threshold]
+        return self.closedsensors
     
     def getOpenSensors(self):
         self.readline()
-        return [i for i in range(len(self.poslist)) if 0 == self.poslist[i] or self.threshold < self.poslist[i]]   
+        return self.opensensors
     
-    def getTriggeredSensor(self):
-        return self.getClosedSensors()[0]
+    def getCurrentSensor(self):
+        self.readline()
+        return self.currentSensor
     
     def sensorCount(self):
         try:
-            return len(self.poslist)
+            return len(self.distances)
         except AttributeError:
             raise SerialNotYetPolledError()    
     
     def readline(self):
         line = self.ser.readline()
-        self.setPosList(line)
+        self.setDistances(line)
+        self.bucketSensors()
+        self.setCurrentSensor()
     
-    def setPosList(self, line):
-        self.poslist = []
-        for elem in line.split(','):
-            i, pos = elem.split(':')
-            self.poslist.append(int(pos))
- 
-    def sensorCount(self):
-        try:
-            return len(self.poslist)
-        except AttributeError:
-            raise SerialNotYetPolledError()
+    def setDistances(self, line):
+        self.distances = []
+        for pair in line.split(','):
+            i, dist = pair.split(':')
+            self.distances.append(int(dist))
+        
+    def bucketSensors(self):
+        self.clearBuckets()
+        for i, distance in enumerate(self.distances):
+            self.putSensorInBucket(i, distance)        
+        
+    def setCurrentSensor(self):
+        if self.closedsensors == []:
+            self.currentSensor = None
+        elif self.currentSensor not in self.closedsensors:
+            self.currentSensor = self.closedsensors[0]
+        
+    def clearBuckets(self):
+        self.opensensors = []
+        self.closedsensors = []  
+        
+    def putSensorInBucket(self, i, dist):
+        if self.isClosed(dist):
+            self.closedsensors.append(i)
+        else:
+            self.opensensors.append(i) 
+            
+    def isClosed(self, distance):
+        return 0 < distance <= self.threshold
     
     
 class SerialNotYetPolledError(StandardError):
