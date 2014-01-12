@@ -19,11 +19,14 @@ class test_storyteller(TestCase):
         
     def test_can_set_the_story_player(self):
         self.story.setPlayer(MockPlayer)
-        self.story.play(1)
+        self.story.play()
         
         
 class MockPlayer(object):
-    pass
+    
+    @staticmethod
+    def play():
+        pass
         
     
         

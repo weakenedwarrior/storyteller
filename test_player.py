@@ -1,22 +1,40 @@
 from unittest import TestCase
+import os
 
-from player import Player, PlayerError
+from player import Player, PlayerError, PLAYCMDS
 
-SOUNDTESTFILE = "testsound.wav"
-BADSOUNDFILE = "NonExistentFile"
+AUDIODIR = 'audio'
+
+MISSINGSOUNDFILE = "NonExistentFile"
+BADSOUNDFILE = "badsound.wav"
+SOUNDTESTFILE = "one.m4a"
 
 
 class test_player(TestCase):
     
-    def test_instantiate_player_and_check_ifReady(self):
-        player = Player()
-        self.assertTrue(player.isReady())
-        
-    def test_can_play_the_sound_file(self):
-        player = Player()
-        player.play(SOUNDTESTFILE)
+    def setUp(self):
+        self.player = Player()
+        self.player.setFile(SOUNDTESTFILE)
         
     def test_missing_file_raises_exception(self):
-        player = Player()
-        self.assertRaises(PlayerError, player.play, BADSOUNDFILE)
+        self.assertRaises(PlayerError, self.player.setFile, MISSINGSOUNDFILE)
+   
+    def test_sound_file_includes_audioDir_path(self):
+        self.assertEqual(self.player.getFile(), os.path.join(AUDIODIR,SOUNDTESTFILE))
+        
+    def test_badsound_file_raises_exception(self):
+        self.player.setFile(BADSOUNDFILE)
+        self.assertRaises(PlayerError, self.player.play)    
+        
+    def test_unknown_os_raises_error(self):
+        self.assertRaises(PlayerError, self.player.setCmdList, [(0,'UnknownOS','UnknownPlayer')])
+        
+    def test_playerCmd_set(self):
+        self.assertIn(self.player.getPlayerCmd(), ['omxplayer','afplay'])
+        
+    def test_can_play_the_sound_file(self):
+        self.player.play()
+        
+        
+        
         
