@@ -7,14 +7,12 @@ from monitor import Monitor
 AUDIODIR = 'audio'
 THRESHOLD = 20
 BAUD = 115200
-DEVICE = '/dev/ttyACM0'
+DEVICE = '/dev/ttyUSB0'
 
 if __name__ == '__main__':
     
-    ser = serial.Serial(DEVICE, BAUD)
-    
     m = Monitor()
-    m.setSerial(ser)
+    m.setSerial(serial.Serial, DEVICE, BAUD)
     m.setThreshold(THRESHOLD)    
     
     p = Player()
@@ -28,6 +26,7 @@ if __name__ == '__main__':
         storyline = m.getNextSensor()
         
         print storyline
+        
         #s.playNext(storyline)
     
     

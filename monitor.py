@@ -5,8 +5,8 @@ class Monitor(object):
         self.currentSensor = None
         self.clearBuckets()
 
-    def setSerial(self, SerialClass):
-        self.ser = SerialClass()
+    def setSerial(self, SerialClass, device, baud):
+        self.ser = SerialClass(device,baud)
         
     def setThreshold(self, threshold):
         self.threshold = threshold

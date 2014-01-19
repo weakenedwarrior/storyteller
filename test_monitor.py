@@ -59,7 +59,7 @@ class test_monitor(TestCase):
     def setUp(self):
         self.cases = range(len(SERIAL_LINE))
         self.mon = Monitor()
-        self.mon.setSerial(MockSerial)
+        self.mon.setSerial(MockSerial, None, None)
         self.mon.setThreshold(THRESHOLD)
         
     def test_get_serial_data(self):
@@ -103,7 +103,7 @@ class test_monitor(TestCase):
 
 class MockSerial(object):
     
-    def __init__(self):
+    def __init__(self, device, baud):
         self.lineno = -1
     
     def readline(self):
