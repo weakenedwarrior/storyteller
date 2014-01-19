@@ -44,9 +44,10 @@ class Monitor(object):
         
     def getCleanLine(self):
         line = ''
-        while line == '':
+        while len(line) <= 5:  # All lines shorter are ignored
             line = self.ser.readline()
-        return line.strip()
+            line = line.strip()
+        return line
     
     def setDistances(self, line):
         self.distances = []
