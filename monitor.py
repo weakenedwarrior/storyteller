@@ -40,6 +40,8 @@ class Monitor(object):
         line = ''
         while line == '':
             line = self.ser.readline()
+        line = self.ser.readline()
+        print 'AAA',line,'ZZZ'
         self.setDistances(line)
         self.bucketSensors()
         self.setCurrentSensor()
