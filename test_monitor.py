@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from monitor import Monitor, SerialNotYetPolledError
 
-SERIAL_LINE = ['0:10,1:12,2:9,3:0,4:1,',
-               '0:20,1:20,2:20,3:20,4:20,',
+SERIAL_LINE = ['0:10,1:12,2:9,3:0,4:1, ',
+               '0:20,1:20,2:20,3:20,4:20,   ',
                '0:20,1:5,2:20,3:20,4:20,',
                '0:5,1:5,2:5,3:20,4:20,',
                '0:0,1:0,2:0,3:9,4:0,',
