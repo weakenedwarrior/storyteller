@@ -22,6 +22,7 @@ class test_storyteller(TestCase):
         self.setUpStoryFiles()
         self.story = StoryTeller()
         self.story.setAudioDir(TESTDIR)
+        self.story.setPlayer(MockPlayer)
         self.story.loadStoryLines()
         
     def setUpStoryFiles(self):
@@ -39,9 +40,6 @@ class test_storyteller(TestCase):
         if os.path.exists(TESTDIR):
             shutil.rmtree(TESTDIR)
         
-    def test_story_teller_raise_error_if_no_player_installed(self):
-        self.assertRaises(StoryTellerError,self.story.play)
-        
     def test_can_list_stories(self):
         storylines = self.story.getStoryLines()
         self.assertIsInstance(storylines,dict)
@@ -51,9 +49,27 @@ class test_storyteller(TestCase):
             self.assertEqual(len(storylines[i]), STORYLENGTHS[i])
         
     def test_can_set_the_story_player(self):
-        self.story.setPlayer(MockPlayer)
+        self.story.setCurrentStoryline(1)
         self.story.play()
         
+    def test_if_current_storyline_not_set_raise_exception(self):
+        self.assertRaises(StoryTellerError, self.story.play)
+            
+    def test_can_cycle_through_multiple_stories(self):
+        self.story.setCurrentStoryline(1)
+        self.assertCorrectFile(0)
+        self.assertCorrectFile(1)
+        self.assertCorrectFile(0)        
+        self.story.setCurrentStoryline(2)
+        self.assertCorrectFile(2)
+        self.assertCorrectFile(3)
+        self.assertCorrectFile(4)
+        self.assertCorrectFile(2)
+           
+    def assertCorrectFile(self, audiofileindex):
+        self.assertEquals(self.story.getCurrentStory(),AUDIOFILES[audiofileindex])
+        self.story.play()
+     
         
 class MockPlayer(object):
     
