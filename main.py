@@ -11,6 +11,7 @@ DEVICE = '/dev/ttyUSB0'
 
 if __name__ == '__main__':
     
+    print "Loading monitor..."
     m = Monitor()
     m.setSerial(serial.Serial, DEVICE, BAUD)
     m.setThreshold(THRESHOLD)  
@@ -22,12 +23,12 @@ if __name__ == '__main__':
 #    s.setPlayer(p)
 #    s.loadStoryLines()  
     
+    print "Starting main loop..."
     while True:
         
         storyline = m.getNextSensor()
         
         print storyline
-        
         #s.playNext(storyline)
     
     
