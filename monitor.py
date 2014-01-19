@@ -83,7 +83,7 @@ class Monitor(object):
     def getNextSensor(self):
         while(True):
             sensor = self.getCurrentSensor()
-            if sensor:
+            if sensor != None:
                 return sensor 
     
 class SerialNotYetPolledError(StandardError):

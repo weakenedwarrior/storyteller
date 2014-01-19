@@ -5,7 +5,7 @@ from monitor import Monitor
 
 
 AUDIODIR = 'audio'
-THRESHOLD = 20
+THRESHOLD = 4
 BAUD = 115200
 DEVICE = '/dev/ttyUSB0'
 
