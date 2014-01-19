@@ -26,6 +26,8 @@ if __name__ == '__main__':
     while True:
         
         storyline = m.getNextSensor()
-        s.playNext(storyline)
+        
+        print storyline
+        #s.playNext(storyline)
     
     

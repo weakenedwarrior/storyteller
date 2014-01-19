@@ -41,6 +41,7 @@ class Monitor(object):
     
     def setDistances(self, line):
         self.distances = []
+        line = line.strip(',')
         for pair in line.split(','):
             i, dist = pair.split(':')
             self.distances.append(int(dist))

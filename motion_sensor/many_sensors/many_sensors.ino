@@ -13,7 +13,7 @@
 
 #define SONAR_NUM     4 // Number of sensors.
 #define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
-#define PING_INTERVAL 200 // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
+#define PING_INTERVAL 50 // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
 
 unsigned long pingTimer[SONAR_NUM]; // Holds the times when the next ping should happen for each sensor.
 unsigned int cm[SONAR_NUM];         // Where the ping distances are stored.
@@ -26,11 +26,21 @@ NewPing sonar[SONAR_NUM] = {     // Sensor object array.
   NewPing(42, 43, MAX_DISTANCE)
 };
 
+int LED_pins[SONAR_NUM] = {26,
+                32,
+                38,
+                44};
+
 void setup() {
   Serial.begin(115200);
   pingTimer[0] = millis() + 75;           // First ping starts at 75ms, gives time for the Arduino to chill before starting.
-  for (uint8_t i = 1; i < SONAR_NUM; i++) // Set the starting time for each sensor.
-    pingTimer[i] = pingTimer[i - 1] + PING_INTERVAL;
+  pinMode(LED_pins[0],OUTPUT);
+
+  for (uint8_t i = 1; i < SONAR_NUM; i++) {// Set the starting time for each sensor.
+      pingTimer[i] = pingTimer[i - 1] + PING_INTERVAL;
+      pinMode(LED_pins[i], OUTPUT);
+  }
+   
 }
 
 void loop() {
@@ -56,9 +66,17 @@ void oneSensorCycle() { // Sensor ping cycle complete, do something with the res
   // The following code would be replaced with your code that does something with the ping results.
   for (uint8_t i = 0; i < SONAR_NUM; i++) {
     Serial.print(i);
-    Serial.print("=");
+    Serial.print(":");
     Serial.print(cm[i]);
-    Serial.print("cm ");
+    Serial.print(",");
+    
+    if (cm[i] < 6 && cm[i] > 0) {
+      digitalWrite(LED_pins[i], HIGH);
+    } else {
+      digitalWrite(LED_pins[i], LOW);
+    }
+    
+    
   }
   Serial.println();
 }
