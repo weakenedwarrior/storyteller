@@ -37,14 +37,16 @@ class Monitor(object):
             raise SerialNotYetPolledError()    
     
     def readline(self):
-        line = ''
-        while line == '':
-            line = self.ser.readline()
-        line = self.ser.readline()
-        print 'AAA',line,'ZZZ'
+        line = self.getCleanLine()
         self.setDistances(line)
         self.bucketSensors()
         self.setCurrentSensor()
+        
+    def getCleanLine(self):
+        line = ''
+        while line == '':
+            line = self.ser.readline()
+        return line.strip()
     
     def setDistances(self, line):
         self.distances = []
