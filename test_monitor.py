@@ -97,9 +97,18 @@ class test_monitor(TestCase):
         self.readMany(5)
         self.assertEqual(self.mon.getNextSensor(),CURRENT_SENSOR[8])
 
+    def test_flush_occurs_on_first_readline(self):
+        self.readMany(5)
+        self.mon.flush()
+        self.assertEqual(self.mon.getDistances(),POS_LIST[0])
+        
+        
+
     def readMany(self, readlines):
         for i in range(readlines):
             self.mon.readline()
+            
+    
 
 class MockSerial(object):
     
@@ -109,3 +118,6 @@ class MockSerial(object):
     def readline(self):
         self.lineno = (self.lineno + 1) % len(SERIAL_LINE)
         return SERIAL_LINE[self.lineno]
+    
+    def flush(self):
+        self.lineno = -1

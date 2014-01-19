@@ -13,7 +13,8 @@ if __name__ == '__main__':
     
     m = Monitor()
     m.setSerial(serial.Serial, DEVICE, BAUD)
-    m.setThreshold(THRESHOLD)    
+    m.setThreshold(THRESHOLD)  
+    m.flush()
     
     p = Player()
     

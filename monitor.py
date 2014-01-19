@@ -8,6 +8,9 @@ class Monitor(object):
     def setSerial(self, SerialClass, device, baud):
         self.ser = SerialClass(device,baud)
         
+    def flush(self):
+        self.ser.flush()
+        
     def setThreshold(self, threshold):
         self.threshold = threshold
         
