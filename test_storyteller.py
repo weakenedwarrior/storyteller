@@ -65,6 +65,15 @@ class test_storyteller(TestCase):
         self.assertCorrectFile(3)
         self.assertCorrectFile(4)
         self.assertCorrectFile(2)
+        
+    def test_can_do_playNext(self):
+        self.story.playNext(1)
+        self.assertCorrectFile(1)
+        self.story.playNext(2)
+        self.story.playNext(2)
+        self.story.playNext(2)
+        self.assertCorrectFile(2)
+        
            
     def assertCorrectFile(self, audiofileindex):
         self.assertEquals(self.story.getCurrentStory(),AUDIOFILES[audiofileindex])
@@ -77,6 +86,8 @@ class MockPlayer(object):
     def play():
         pass
         
-    
+        
+        
+
         
         

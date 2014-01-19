@@ -17,6 +17,11 @@ class StoryTeller(object):
         else:
             raise PlayerNotReady
 
+    def playNext(self, storyline):
+        if storyline != self.currentstoryline:
+            self.setCurrentStoryline(storyline)
+        self.play()
+
     def isReady(self):
         return self.player != None and self.currentstoryline in self.storylines
     

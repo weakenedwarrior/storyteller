@@ -69,6 +69,11 @@ class Monitor(object):
     def isClosed(self, distance):
         return 0 < distance <= self.threshold
     
+    def getNextSensor(self):
+        while(True):
+            sensor = self.getCurrentSensor()
+            if sensor:
+                return sensor 
     
 class SerialNotYetPolledError(StandardError):
     pass
