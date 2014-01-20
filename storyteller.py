@@ -59,6 +59,11 @@ class StoryTeller(object):
     def getCurrentStory(self):
         return self.storylines[self.currentstoryline][self.currentstoryindex]
         
+    def showStoryLines(self):
+        allStories = []
+        for story in self.storylines:
+            allStories.extend(self.storylines[story])
+        return '\n'.join(allStories)
         
 class StoryTellerError(StandardError):
     pass

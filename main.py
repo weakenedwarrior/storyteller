@@ -17,10 +17,12 @@ if __name__ == '__main__':
     m.setThreshold(THRESHOLD)  
     m.flush()
     
+    print "Loading stories..."
     s = StoryTeller()
     s.setAudioDir(AUDIODIR)
     s.setPlayer(Player)
-    s.loadStoryLines()  
+    s.loadStoryLines() 
+    print s.showStoryLines
        
     print "Starting main loop..."
     while True:

@@ -74,6 +74,8 @@ class test_storyteller(TestCase):
         self.story.playNext(2)
         self.assertCorrectFile(2)
         
+    def test_can_show_storylines(self):
+        self.assertEqual(self.story.showStoryLines(), '\n'.join(AUDIOFILES))
            
     def assertCorrectFile(self, audiofileindex):
         self.assertEquals(self.story.getCurrentStory(),AUDIOFILES[audiofileindex])
