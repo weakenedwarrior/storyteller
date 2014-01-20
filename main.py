@@ -1,4 +1,5 @@
 import serial
+import time
 from storyteller import StoryTeller
 from player import Player
 from monitor import Monitor
@@ -32,6 +33,8 @@ if __name__ == '__main__':
         
         print storyline
         s.playNext(storyline)
+        
+        time.sleep(0.1)
         
     
     

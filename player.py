@@ -47,6 +47,7 @@ class Player(object):
     
     def play(self):
         if self.isReady():
+            print 'Play audio from:', self.getFile
             self.callSubProcess()
             
     def callSubProcess(self):
