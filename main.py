@@ -23,6 +23,8 @@ if __name__ == '__main__':
     s.loadStoryLines() 
     print s.showStoryLines()
        
+    s.playNext(10) # This is the startup message
+       
     print "Starting main loop..."
     
     while True:
