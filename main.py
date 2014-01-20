@@ -22,7 +22,7 @@ if __name__ == '__main__':
     s.setAudioDir(AUDIODIR)
     s.setPlayer(Player)
     s.loadStoryLines() 
-    print s.showStoryLines
+    print s.showStoryLines()
        
     print "Starting main loop..."
     while True:
