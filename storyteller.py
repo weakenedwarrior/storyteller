@@ -34,9 +34,13 @@ class StoryTeller(object):
         
     def setPlayer(self, player):
         self.player = player()
+        if self.audiodir:
+            self.player.setAudioDir(self.audiodir)
         
     def setAudioDir(self, audiodir):
         self.audiodir = audiodir
+        if self.player:
+            self.player.setAudioDir(audiodir)
         
     def loadStoryLines(self):
         for filename in os.listdir(self.audiodir):
@@ -71,8 +75,7 @@ class StoryTeller(object):
         return '\n'.join(allStories)
     
     def setPlayerFile(self):
-        audiofile = os.path.join(self.audiodir,self.getCurrentStory())
-        self.player.setFile(audiofile)        
+        self.player.setFile(self.getCurrentStory())        
         
 class StoryTellerError(StandardError):
     pass

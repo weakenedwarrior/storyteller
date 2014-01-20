@@ -86,9 +86,13 @@ class MockPlayer(object):
     
     def __init__(self):
         self.filename = None
+        self.audiodir = None
+    
+    def setAudioDir(self, audiodir):
+        self.audiodir = audiodir
     
     def play(self):
-        if self.filename == None:
+        if self.filename == None or self.audiodir == None:
             raise MockPlayerError
         
     def setFile(self, filename):
