@@ -17,11 +17,11 @@ if __name__ == '__main__':
     m.setThreshold(THRESHOLD)  
     m.flush()
     
-#    p = Player()
+    p = Player()
     
-#    s = StoryTeller()
-#    s.setPlayer(p)
-#    s.loadStoryLines()  
+    s = StoryTeller()
+    s.setPlayer(p)
+    s.loadStoryLines()  
     
     print "Starting main loop..."
     while True:
