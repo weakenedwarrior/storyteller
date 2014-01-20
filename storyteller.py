@@ -12,8 +12,7 @@ class StoryTeller(object):
     def play(self):
         if self.isReady():
             self.player.play() 
-            self.currentstoryindex += 1
-            self.currentstoryindex %= len(self.storylines[self.currentstoryline])
+            self.setNextStory()
         else:
             raise PlayerNotReady
 
@@ -22,6 +21,11 @@ class StoryTeller(object):
             self.setCurrentStoryline(storyline)
         self.play()
 
+    def setNextStory(self):
+        self.currentstoryindex += 1
+        self.currentstoryindex %= len(self.storylines[self.currentstoryline])
+        self.setPlayerFile()
+
     def isReady(self):
         return self.player != None and self.currentstoryline in self.storylines
     
@@ -29,7 +33,7 @@ class StoryTeller(object):
         return self.storylines
         
     def setPlayer(self, player):
-        self.player = player
+        self.player = player()
         
     def setAudioDir(self, audiodir):
         self.audiodir = audiodir
@@ -55,6 +59,7 @@ class StoryTeller(object):
     def setCurrentStoryline(self, storyline):
         self.currentstoryline = storyline
         self.currentstoryindex = 0
+        self.setPlayerFile()
         
     def getCurrentStory(self):
         return self.storylines[self.currentstoryline][self.currentstoryindex]
@@ -64,6 +69,10 @@ class StoryTeller(object):
         for story in self.storylines:
             allStories.extend(self.storylines[story])
         return '\n'.join(allStories)
+    
+    def setPlayerFile(self):
+        audiofile = os.path.join(self.audiodir,self.getCurrentStory())
+        self.player.setFile(audiofile)        
         
 class StoryTellerError(StandardError):
     pass

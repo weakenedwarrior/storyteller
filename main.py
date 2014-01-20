@@ -30,6 +30,6 @@ if __name__ == '__main__':
         storyline = m.getNextSensor()
         
         print storyline
-        #s.playNext(storyline)
+        s.playNext(storyline)
     
     

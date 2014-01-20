@@ -84,10 +84,18 @@ class test_storyteller(TestCase):
         
 class MockPlayer(object):
     
-    @staticmethod
-    def play():
-        pass
+    def __init__(self):
+        self.filename = None
+    
+    def play(self):
+        if self.filename == None:
+            raise MockPlayerError
         
+    def setFile(self, filename):
+        self.filename = filename
+        
+class MockPlayerError(StandardError):
+    pass
         
         
 
