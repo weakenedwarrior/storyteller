@@ -24,14 +24,14 @@ if __name__ == '__main__':
     print s.showStoryLines()
        
     print "Starting main loop..."
-    m.flush()
+    
     while True:
         
+        m.flush()
         storyline = m.getNextSensor()
         
         print storyline
         s.playNext(storyline)
         
-        m.flush()
     
     

@@ -54,6 +54,7 @@ class StoryTeller(object):
         index = self.getIndex(filename)
         if index in self.storylines:
             self.storylines[index].append(filename)
+            self.storylines[index].sort()
         else:
             self.storylines[index] = [filename]
             
