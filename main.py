@@ -15,7 +15,6 @@ if __name__ == '__main__':
     m = Monitor()
     m.setSerial(serial.Serial, DEVICE, BAUD)
     m.setThreshold(THRESHOLD)  
-    m.flush()
     
     print "Loading stories..."
     s = StoryTeller()
@@ -25,11 +24,14 @@ if __name__ == '__main__':
     print s.showStoryLines()
        
     print "Starting main loop..."
+    m.flush()
     while True:
         
         storyline = m.getNextSensor()
         
         print storyline
         s.playNext(storyline)
+        
+        m.flush()
     
     
