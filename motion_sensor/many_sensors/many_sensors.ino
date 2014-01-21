@@ -11,7 +11,7 @@
 // ---------------------------------------------------------------------------
 #include <NewPing.h>
 
-#define SONAR_NUM     4 // Number of sensors.
+#define SONAR_NUM     5 // Number of sensors.
 #define MAX_DISTANCE 200 // Maximum distance (in cm) to ping.
 #define PING_INTERVAL 50 // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
 
@@ -23,13 +23,11 @@ NewPing sonar[SONAR_NUM] = {     // Sensor object array.
   NewPing(24, 25, MAX_DISTANCE), // Each sensor's trigger pin, echo pin, and max distance to ping.
   NewPing(30, 31, MAX_DISTANCE),
   NewPing(36, 37, MAX_DISTANCE),
-  NewPing(42, 43, MAX_DISTANCE)
+  NewPing(42, 43, MAX_DISTANCE),
+  NewPing(48, 49, MAX_DISTANCE)
 };
 
-int LED_pins[SONAR_NUM] = {26,
-                32,
-                38,
-                44};
+int LED_pins[SONAR_NUM] = {26,32,38,44,50};
 
 void setup() {
   Serial.begin(115200);
@@ -70,7 +68,7 @@ void oneSensorCycle() { // Sensor ping cycle complete, do something with the res
     Serial.print(cm[i]);
     Serial.print(",");
     
-    if (cm[i] < 6 && cm[i] > 0) {
+    if (cm[i] < 8 && cm[i] > 0) {
       digitalWrite(LED_pins[i], HIGH);
     } else {
       digitalWrite(LED_pins[i], LOW);
