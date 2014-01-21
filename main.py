@@ -4,8 +4,8 @@ from storyteller import StoryTeller
 from player import Player
 from monitor import Monitor
 
-
-AUDIODIR = 'audio'
+PROJECTDIR = '/home/pi/Projects/storyteller/'
+AUDIODIR = PROJECTDIR + 'audio'
 THRESHOLD = 8  # Close senor threshold in cm
 BAUD = 115200
 DEVICE = '/dev/ttyUSB0'
