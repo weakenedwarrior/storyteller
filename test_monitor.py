@@ -119,5 +119,5 @@ class MockSerial(object):
         self.lineno = (self.lineno + 1) % len(SERIAL_LINE)
         return SERIAL_LINE[self.lineno]
     
-    def flush(self):
+    def flushInput(self):
         self.lineno = -1

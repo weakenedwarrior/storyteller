@@ -4,7 +4,8 @@ import subprocess
 PLAYCMDS = [(1,'raspberrypi','omxplayer'),
             (0,'Darwin','afplay')]
 
-DEFAULTAUDIODIR = 'audio'
+PROJECTDIR = '/home/pi/Projects/storyteller/'
+DEFAULTAUDIODIR = PROJECTDIR + 'audio'
 
 class Player(object):
         

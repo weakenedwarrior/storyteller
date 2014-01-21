@@ -10,7 +10,6 @@ class Monitor(object):
         
     def flush(self):
         self.ser.flushInput()
-        self.ser.flushOutput()
         
     def setThreshold(self, threshold):
         self.threshold = threshold
