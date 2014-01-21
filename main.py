@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import serial
 from storyteller import StoryTeller
 from player import Player
@@ -5,7 +6,7 @@ from monitor import Monitor
 
 
 AUDIODIR = 'audio'
-THRESHOLD = 4
+THRESHOLD = 8  # Close senor threshold in cm
 BAUD = 115200
 DEVICE = '/dev/ttyUSB0'
 
