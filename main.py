@@ -6,7 +6,8 @@ from monitor import Monitor
 
 PROJECTDIR = '/home/pi/Projects/storyteller/'
 AUDIODIR = PROJECTDIR + 'audio'
-THRESHOLD = 8  # Close senor threshold in cm
+DEFAULT_THRESHOLD = 8  # Close senor threshold in cm
+SENSOR_THRESHOLDS = {0:4}  # Close senor threshold in cm
 BAUD = 115200
 DEVICE = '/dev/ttyUSB0'
 
@@ -15,7 +16,7 @@ if __name__ == '__main__':
     print "Loading monitor..."
     m = Monitor()
     m.setSerial(serial.Serial, DEVICE, BAUD)
-    m.setThreshold(THRESHOLD)  
+    m.setThresholds(DEFAULT_THRESHOLD, SENSOR_THRESHOLDS)  
     
     print "Loading stories..."
     s = StoryTeller()

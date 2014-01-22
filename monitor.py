@@ -11,8 +11,9 @@ class Monitor(object):
     def flush(self):
         self.ser.flushInput()
         
-    def setThreshold(self, threshold):
-        self.threshold = threshold
+    def setThresholds(self, default_threshold, sensor_thresholds):
+        self.default_threshold = default_threshold
+        self.sensor_thresholds = sensor_thresholds
         
     def getDistances(self):
         self.readline()
@@ -72,13 +73,17 @@ class Monitor(object):
         self.closedsensors = []  
         
     def putSensorInBucket(self, i, dist):
-        if self.isClosed(dist):
+        if self.isClosed(i,dist):
             self.closedsensors.append(i)
         else:
             self.opensensors.append(i) 
             
-    def isClosed(self, distance):
-        return 0 < distance <= self.threshold
+    def isClosed(self,sensor,distance):
+        if sensor in self.sensor_thresholds:
+            threshold = self.sensor_thresholds[sensor]
+        else:
+            threshold = self.default_threshold       
+        return 0 < distance <= threshold
     
     def getNextSensor(self):
         while(True):
