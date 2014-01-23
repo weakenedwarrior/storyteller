@@ -3,6 +3,7 @@ from unittest import TestCase
 from monitor import Monitor, SerialNotYetPolledError
 
 SERIAL_LINE = ['0:10,1:12,2:9,3:5,4:1, ',
+               '0:10,1:12,2:9,3:5,4:1, ',
                '0:20,1:20,2:20,3:20,4:20, ',
                '0:20,1:5,2:20,3:20,4:20, ',
                '0:5,1:5,2:5,3:20,4:20, ',
@@ -13,6 +14,7 @@ SERIAL_LINE = ['0:10,1:12,2:9,3:5,4:1, ',
                '0:0,1:0,2:0,3:0,4:5, ']
 
 POS_LIST = [[10,12,9,5,1],
+            [10,12,9,5,1],
             [20,20,20,20,20],
             [20,5,20,20,20],
             [5,5,5,20,20],
@@ -20,32 +22,39 @@ POS_LIST = [[10,12,9,5,1],
             [0,0,0,9,0],
             [0,0,0,0,0],
             [0,0,0,0,0],
+            [0,0,0,0,5],
             [0,0,0,0,5]]
 
-CLOSED_SENSORS = [[0,2,3,4],
+CLOSED_SENSORS = [[],
+                  [0,2,3,4],
                   [],
                   [1],
                   [0,1,2],
+                  [3],
                   [3],
                   [],
                   [],
                   [],
                   [4]]
 
-OPEN_SENSORS = [[1],
+OPEN_SENSORS = [[0,1,2,3,4],
+                [1],
                 [0,1,2,3,4],
                 [0,2,3,4],
                 [3,4],
+                [0,1,2,4],
                 [0,1,2,4],
                 [0,1,2,3,4],
                 [0,1,2,3,4],
                 [0,1,2,3,4],
                 [0,1,2,3]]
 
-CURRENT_SENSOR = [0,
+CURRENT_SENSOR = [None,
+                  0,
                   None,
                   1,
                   1,
+                  3,
                   3,
                   None,
                   None,
@@ -53,7 +62,7 @@ CURRENT_SENSOR = [0,
                   4]
 
 DEFAULT_THRESHOLD = 10
-INDIVIDUAL_THRESHOLDS = {3:6}
+INDIVIDUAL_THRESHOLDS = {3:10}
 
 class test_monitor(TestCase):
     
@@ -87,7 +96,7 @@ class test_monitor(TestCase):
             self.assertIn(self.mon.getCurrentSensor(),[None]+self.cases)
         
     def test_when_no_sensors_are_closed_return_none(self):
-        self.mon.readline()
+        self.readMany(2)
         self.assertEqual(self.mon.getCurrentSensor(),None)
         
     def test_once_a_sensor_is_current_it_remains(self):
@@ -95,8 +104,8 @@ class test_monitor(TestCase):
             self.assertEqual(self.mon.getCurrentSensor(),CURRENT_SENSOR[i])
             
     def test_getNextSensor_blocks_until_a_sensor_closes(self):
-        self.readMany(5)
-        self.assertEqual(self.mon.getNextSensor(),CURRENT_SENSOR[8])
+        self.readMany(7)
+        self.assertEqual(self.mon.getNextSensor(),CURRENT_SENSOR[10])
 
     def test_flush_occurs_on_first_readline(self):
         self.readMany(5)
@@ -107,7 +116,13 @@ class test_monitor(TestCase):
         for i in range(readlines):
             self.mon.readline()
             
-    
+    def test_can_get_previous_distances(self):
+        self.mon.readline()
+        self.assertEqual(self.mon.getPreviousDistances(),None)
+        self.mon.readline()
+        self.mon.readline()
+        self.assertEqual(self.mon.getPreviousDistances(),POS_LIST[1])
+        
 
 class MockSerial(object):
     

@@ -7,7 +7,7 @@ from monitor import Monitor
 PROJECTDIR = '/home/pi/Projects/storyteller/'
 AUDIODIR = PROJECTDIR + 'audio'
 DEFAULT_THRESHOLD = 6  # in cm
-SENSOR_THRESHOLDS = {0:4,2:4}  # in cm
+SENSOR_THRESHOLDS = {}  # in cm
 BAUD = 115200
 DEVICE = '/dev/ttyUSB0'
 

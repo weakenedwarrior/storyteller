@@ -4,6 +4,7 @@ class Monitor(object):
     def __init__(self):
         self.currentSensor = None
         self.clearBuckets()
+        self.distances = None
 
     def setSerial(self, SerialClass, device, baud):
         self.ser = SerialClass(device,baud)
@@ -17,7 +18,10 @@ class Monitor(object):
         
     def getDistances(self):
         self.readline()
-        return self.distances 
+        return self.distances
+    
+    def getPreviousDistances(self):
+        return self.previous_distances
     
     def getClosedSensors(self):
         self.readline()
@@ -32,11 +36,11 @@ class Monitor(object):
         return self.currentSensor
     
     def sensorCount(self):
-        try:
+        if self.distances == None:
+            raise SerialNotYetPolledError() 
+        else:
             return len(self.distances)
-        except AttributeError:
-            raise SerialNotYetPolledError()    
-    
+               
     def readline(self):
         line = self.getCleanLine()
         self.setDistances(line)
@@ -51,16 +55,23 @@ class Monitor(object):
         return line
     
     def setDistances(self, line):
+        self.storeOldDistance()
         self.distances = []
         line = line.strip(',')
         for pair in line.split(','):
             i, dist = pair.split(':')
             self.distances.append(int(dist))
+            
+    def storeOldDistance(self):
+        self.previous_distances = self.distances
         
     def bucketSensors(self):
         self.clearBuckets()
         for i, distance in enumerate(self.distances):
-            self.putSensorInBucket(i, distance)        
+            if self.previous_distances == None or self.previous_distances[i] == 0:
+                self.opensensors.append(i)
+            else:
+                self.putSensorInBucket(i, distance)        
         
     def setCurrentSensor(self):
         if self.closedsensors == []:
