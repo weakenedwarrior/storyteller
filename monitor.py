@@ -11,7 +11,6 @@ class Monitor(object):
         
     def flush(self):
         self.ser.flushInput()
-        self.previous_distances = None
         
     def setThresholds(self, default_threshold, sensor_thresholds):
         self.default_threshold = default_threshold
@@ -51,11 +50,8 @@ class Monitor(object):
     def getCleanLine(self):
         line = ''
         while len(line) <= 5:  # All lines shorter are ignored
-            print "++++"
             line = self.ser.readline()
             line = line.strip()
-            print line
-        print "----"
         return line
     
     def setDistances(self, line):

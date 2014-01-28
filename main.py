@@ -10,7 +10,6 @@ DEFAULT_THRESHOLD = 6  # in cm
 SENSOR_THRESHOLDS = {}  # in cm
 BAUD = 115200
 DEVICE = '/dev/ttyUSB0'
-MODE = 'FirstOrRest' # or 'PlayEach'
 
 if __name__ == '__main__':
     
@@ -32,12 +31,11 @@ if __name__ == '__main__':
     
     while True:
         
-        print "Flushing..."
         m.flush()
         storyline = m.getNextSensor()
         
-        print "Storyline: %s" % storyline
-        s.playFirstOrRest(storyline)
+        print storyline
+        s.playNext(storyline)
         
         
     

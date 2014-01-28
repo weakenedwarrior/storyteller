@@ -20,20 +20,6 @@ class StoryTeller(object):
         if storyline != self.currentstoryline:
             self.setCurrentStoryline(storyline)
         self.play()
-        
-    def playFirstOrRest(self, storyline):
-        if storyline != self.currentstoryline:
-            self.setCurrentStoryline(storyline)
-            self.play() 
-        else:
-            self.playUntilFinished()
-            
-    def playUntilFinished(self):
-        while not self.isFirstStory():
-            self.play()
-            
-    def isFirstStory(self):
-        return self.currentstoryindex == 0
 
     def setNextStory(self):
         self.currentstoryindex += 1
