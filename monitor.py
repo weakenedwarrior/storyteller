@@ -11,6 +11,7 @@ class Monitor(object):
         
     def flush(self):
         self.ser.flushInput()
+        self.previous_distances = None
         
     def setThresholds(self, default_threshold, sensor_thresholds):
         self.default_threshold = default_threshold
