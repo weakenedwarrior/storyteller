@@ -31,11 +31,18 @@ if __name__ == '__main__':
     
     while True:
         
+        print "Flushing ..."
         m.flush()
         storyline = m.getNextSensor()
         
+        print "Closing serial"
+        m.ser.close()
+        
         print storyline
         s.playNext(storyline)
+        
+        print "Opening serial"
+        m.ser.open()
         
         
     

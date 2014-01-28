@@ -44,6 +44,7 @@ class Monitor(object):
                
     def readline(self):
         line = self.getCleanLine()
+        print line
         self.setDistances(line)
         self.bucketSensors()
         self.setCurrentSensor()
