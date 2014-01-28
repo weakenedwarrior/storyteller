@@ -74,6 +74,13 @@ class test_storyteller(TestCase):
         self.story.playNext(2)
         self.assertCorrectFile(2)
         
+        
+    def test_can_do_playFirstOrRest(self):
+        self.story.playFirstOrRest(2)
+        self.assertCorrectFile(3)
+        self.story.playFirstOrRest(2)
+        self.assertCorrectFile(2)
+        
     def test_can_show_storylines(self):
         self.assertEqual(self.story.showStoryLines(), '\n'.join(AUDIOFILES))
            

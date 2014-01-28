@@ -10,6 +10,7 @@ DEFAULT_THRESHOLD = 6  # in cm
 SENSOR_THRESHOLDS = {}  # in cm
 BAUD = 115200
 DEVICE = '/dev/ttyUSB0'
+MODE = 'FirstOrRest' # or 'PlayEach'
 
 if __name__ == '__main__':
     
@@ -35,7 +36,10 @@ if __name__ == '__main__':
         storyline = m.getNextSensor()
         
         print storyline
-        s.playNext(storyline)
+        if MODE == 'PlayEach':
+            s.playNext(storyline)
+        elif MODE == 'FirstOrRest':
+            s.playFirstOrRest(storyline)
         
         
     

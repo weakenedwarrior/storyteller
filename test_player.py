@@ -7,7 +7,7 @@ TESTAUDIODIR = 'audio_test'
 
 MISSINGSOUNDFILE = "NonExistentFile"
 BADSOUNDFILE = "badsound.wav"
-SOUNDTESTFILE = "one.m4a"
+SOUNDTESTFILE = "digging.mp3"
 
 
 class test_player(TestCase):
