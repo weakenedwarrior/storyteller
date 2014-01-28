@@ -32,14 +32,12 @@ if __name__ == '__main__':
     
     while True:
         
+        print "Flushing..."
         m.flush()
         storyline = m.getNextSensor()
         
-        print storyline
-        if MODE == 'PlayEach':
-            s.playNext(storyline)
-        elif MODE == 'FirstOrRest':
-            s.playFirstOrRest(storyline)
+        print "Storyline: %s" % storyline
+        s.playFirstOrRest(storyline)
         
         
     
